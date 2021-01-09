@@ -20,3 +20,6 @@ npm run start
 - Dashboard for sets
   - Timeline of sets
 - Styling
+- Cookies
+  - Notification
+  - Include cookies on requests
