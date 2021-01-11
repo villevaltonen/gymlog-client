@@ -78,7 +78,7 @@ const Login = () => {
             />
           </div>
           <button type="submit" onClick={handleSubmit}>
-            Sign up
+            Sign in
           </button>
           {message.show ? <p>{message.message}</p> : ""}
         </form>

@@ -15,11 +15,11 @@ npm run start
 
 - Home page
 - Navbar
-- Login / logout
-- Register user
+  - auth / no auth for private routes
+- Logout
 - Dashboard for sets
-  - Timeline of sets
+  - timestamps are something wrong when using add set
 - Styling
 - Cookies
   - Notification
-  - Include cookies on requests
+  - Try refresh token on 401

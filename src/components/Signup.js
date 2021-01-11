@@ -4,7 +4,7 @@ const Register = () => {
   const [credentials, setCredentials] = useState({
       username: "",
       password: "",
-      verifyPassword: "",
+      confirmPassword: "",
   });
   const [ message, setMessage] = useState({
     show: false,
@@ -14,9 +14,9 @@ const Register = () => {
   const handleSubmit = (e) => {
       e.preventDefault();
       // Verify all fields are filled
-      if (credentials.username && credentials.password && credentials.verifyPassword) {
+      if (credentials.username && credentials.password && credentials.confirmPassword) {
         // Verify that passwords are matching
-        if(credentials.password === credentials.verifyPassword) {
+        if(credentials.password === credentials.confirmPassword) {
           setMessage({...message, show: false});
           const newCredentials = {
             username: credentials.username,
@@ -87,12 +87,12 @@ const Register = () => {
           />
         </div>
         <div className="form-control">
-          <label htlmfor="password2">Verify password: </label>
+          <label htlmfor="password2">Confirm password: </label>
           <input
             type="password"
-            id="verifyPassword"
-            name="verifyPassword"
-            value={credentials.verifyPassword}
+            id="confirmPassword"
+            name="confirmPassword"
+            value={credentials.confirmPassword}
             onChange={handleChange}
           />
         </div>
