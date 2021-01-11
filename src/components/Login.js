@@ -19,7 +19,6 @@ const Login = () => {
             fetch("/api/users/login", { 
             method: "POST",
             body: JSON.stringify(credentials),
-            mode: "cors",
             credentials: "include"
            }).then((res) => {
              console.log(res);

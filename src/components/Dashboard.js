@@ -1,7 +1,12 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 
 const Dashboard = () => {
-    const [sets, setSets] = useState([])
+    const [resultList, setResultList] = useState({
+        results: 0,
+        skip: 0,
+        limit: 5, // TODO: increase this for real use
+        sets: []
+    })
     const [ message, setMessage] = useState({
       show: false,
       message: "",
@@ -9,9 +14,8 @@ const Dashboard = () => {
 
     const getSets = () => {
          try {
-            fetch("/api/v1/sets", { 
+            fetch(`/api/v1/sets?skip=${resultList.skip}&limit=${resultList.limit}`, { 
             method: "GET",
-            mode: "cors",
             credentials: "include"
            }).then((res) => {
              console.log(res);
@@ -20,15 +24,17 @@ const Dashboard = () => {
               console.log(data);
 
              if(!data.error) {
-               setSets({
-                   // TODO not correct
-                   sets: sets.push(data)
-               })
+                const newSets = resultList.sets.concat(data.sets);
+                setResultList({
+                    ...resultList,
+                    sets: newSets,
+                    skip: newSets.length
+                })
              } else {
-               setMessage({
-                 show: true,
-                 message: data.error,
-               })
+                setMessage({
+                    show: true,
+                    message: data.error,
+                })
              }
            });
           } catch(err) {
@@ -36,14 +42,18 @@ const Dashboard = () => {
           }
     }
 
+    useEffect(() => {
+        getSets();
+    }, []);
+
     return (
-        <div>{sets.map((set) => {
-            console.log(set);
+        <div>
+            { resultList.sets.map((set) => {
             const { id, exercise, weight, repetitions } = set;
             return (
-                <h4 id={id}>{exercise}{weight}{repetitions}</h4>
-            );
-        })}
+                <h4 key={id}>{exercise}{weight}{repetitions}</h4>
+            ); }
+        )}
         <button className="btn" onClick={getSets}>Get sets</button>
         {message.show ? <p>{message.message}</p> : ""}
         </div>

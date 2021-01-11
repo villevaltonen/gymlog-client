@@ -26,7 +26,7 @@ const Register = () => {
             fetch("/api/users/register", { 
             method: "POST",
             body: JSON.stringify(newCredentials),
-            mode: "cors"
+            credentials: "include"
            }).then((res) => {
              return res.json();
            }).then((data) => {
