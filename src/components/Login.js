@@ -1,24 +1,50 @@
 import { React, useState } from 'react';
 
-const Login = props => {
+const Login = () => {
     const [credentials, setCredentials] = useState({
-        email: "",
+        username: "",
         password: "",
     });
-    const [ warning, setWarning] = useState({
+    const [ message, setMessage] = useState({
       show: false,
       message: "",
     });
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        if (credentials.email && credentials.password) {
-            setWarning({...warning, show: false});
-            // TODO: send request to login API
-            console.log(credentials);
-        } else {
-          setWarning({...warning, show: true, message: "All fields are required"});
-        }
+      e.preventDefault();
+      // Verify all fields are filled
+      if (credentials.username && credentials.password) {
+          console.log(window.location.origin)
+          try {
+            fetch("/api/users/login", { 
+            method: "POST",
+            body: JSON.stringify(credentials),
+            mode: "cors",
+            credentials: "include"
+           }).then((res) => {
+             console.log(res);
+             return res.json();
+           }).then((data) => {
+              console.log(data);
+
+             if(!data.error) {
+               setMessage({
+                 show: true,
+                 message: "Success!"
+               })
+             } else {
+               setMessage({
+                 show: true,
+                 message: data.error,
+               })
+             }
+           });
+          } catch(err) {
+            console.log(err);
+          }
+      } else {
+        setMessage({...message, show: true, message: "All fields are required"});
+      }
     }
 
     const handleChange = (e) => {
@@ -33,12 +59,12 @@ const Login = props => {
              <article>
         <form className="form">
           <div className="form-control">
-            <label htlmfor="email">Email: </label>
+            <label htlmfor="username">Username: </label>
             <input
               type="text"
-              id="email"
-              name="email"
-              value={credentials.email}
+              id="username"
+              name="username"
+              value={credentials.username}
               onChange={handleChange}
             />
           </div>
@@ -55,7 +81,7 @@ const Login = props => {
           <button type="submit" onClick={handleSubmit}>
             Sign up
           </button>
-          {warning.show ? <p>{warning.message}</p> : ""}
+          {message.show ? <p>{message.message}</p> : ""}
         </form>
       </article>
         </div>

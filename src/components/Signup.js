@@ -6,7 +6,7 @@ const Register = () => {
       password: "",
       verifyPassword: "",
   });
-  const [ warning, setWarning] = useState({
+  const [ message, setMessage] = useState({
     show: false,
     message: "",
   });
@@ -17,32 +17,41 @@ const Register = () => {
       if (credentials.username && credentials.password && credentials.verifyPassword) {
         // Verify that passwords are matching
         if(credentials.password === credentials.verifyPassword) {
-          setWarning({...warning, show: false});
+          setMessage({...message, show: false});
           const newCredentials = {
             username: credentials.username,
             password: credentials.password,
           }
-          // HTTP-request
-          const requestBody = JSON.stringify(newCredentials)
-          console.log(requestBody)
-          const response = fetch("http://localhost:8010/api/register", { 
+          try {
+            fetch("/api/users/register", { 
             method: "POST",
-            body: requestBody,
+            body: JSON.stringify(newCredentials),
             mode: "cors"
            }).then((res) => {
-             console.log(res);
-              if(res.ok) {
-                console.log("OK");
-                return res.json();
-              } else {
-                console.log("ERROR")
-              }
+             return res.json();
+           }).then((data) => {
+              console.log(data);
+
+             if(!data.error) {
+               setMessage({
+                 show: true,
+                 message: "Success!"
+               })
+             } else {
+               setMessage({
+                 show: true,
+                 message: data.error,
+               })
+             }
            });
+          } catch(err) {
+            console.log(err);
+          }
         } else {
-          setWarning({...warning, show: true, message: "Passwords don't match"});
+          setMessage({...message, show: true, message: "Passwords don't match"});
         }
       } else {
-        setWarning({...warning, show: true, message: "All fields are required"});
+        setMessage({...message, show: true, message: "All fields are required"});
       }
   }
 
@@ -90,7 +99,7 @@ const Register = () => {
         <button type="submit" onClick={handleSubmit}>
           Sign up
         </button>
-        {warning.show ? <p>{warning.message}</p> : ""}
+        {message.show ? <p>{message.message}</p> : ""}
       </form>
     </article>
       </div>
