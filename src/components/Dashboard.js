@@ -1,4 +1,6 @@
 import { React, useState, useEffect } from 'react'
+import Login from './Login'
+import { useAuthentication } from "./AuthenticationProvider";
 
 const Dashboard = () => {
     const [resultList, setResultList] = useState({
@@ -12,10 +14,11 @@ const Dashboard = () => {
         weight: 0.0,
         repetitions: 0,
     })
-    const [ message, setMessage] = useState({
+    const [message, setMessage] = useState({
       show: false,
       message: "",
     });
+    const [isAuthenticated, setIsAuthenticated] = useAuthentication();
 
     const loadSets = () => {
          try {
@@ -26,12 +29,19 @@ const Dashboard = () => {
              return res.json();
            }).then((data) => {
              if(!data.error) {
-                const newSets = resultList.sets.concat(data.sets);
-                setResultList({
-                    ...resultList,
-                    sets: newSets,
-                    skip: newSets.length
+                 if(data.sets.length === 0) {
+                    setMessage({
+                    show: true,
+                    message: "No more sets found",
                 })
+                 } else {
+                    const newSets = resultList.sets.concat(data.sets);
+                    setResultList({
+                        ...resultList,
+                        sets: newSets,
+                        skip: newSets.length
+                    })
+                 }
              } else {
                 setMessage({
                     show: true,
@@ -46,8 +56,8 @@ const Dashboard = () => {
 
     useEffect(() => {
         fetch(`/api/v1/sets?skip=0&limit=5`, { 
-        method: "GET",
-        credentials: "include"
+            method: "GET",
+            credentials: "include"
         }).then((res) => {
             return res.json();
         }).then((data) => {
@@ -59,7 +69,7 @@ const Dashboard = () => {
                 });
             }
         })
-    }, []);
+    }, [isAuthenticated]);
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -76,7 +86,7 @@ const Dashboard = () => {
                     credentials: "include",
                     body: JSON.stringify({
                         exercise: set.exercise,
-                        weight: parseInt(set.weight),
+                        weight: parseFloat(set.weight),
                         repetitions: parseInt(set.repetitions)
                     })
                 }).then((res) => {
@@ -91,10 +101,8 @@ const Dashboard = () => {
                             created: data.created
                         }]
                         
-                        const newSets = newSet.concat(resultList.sets)
-                        console.log(newSets)
                         setResultList(resultList => resultList = {
-                            sets: newSets,
+                            sets: newSet.concat(resultList.sets),
                             skip: resultList.sets.length + 1,
                             limit: 5
                         })
@@ -113,9 +121,11 @@ const Dashboard = () => {
 
     return (
         <div>
+            {isAuthenticated ?
+            <div>
             <form className="form">
           <div className="form-control">
-            <label htlmFor="exercise">Exercise: </label>
+            <label htlmfor="exercise">Exercise: </label>
             <input
               type="text"
               id="exercise"
@@ -125,7 +135,7 @@ const Dashboard = () => {
             />
           </div>
           <div className="form-control">
-            <label htlmFor="weight">Weight: </label>
+            <label htlmfor="weight">Weight: </label>
             <input
               type="number"
               id="weight"
@@ -135,7 +145,7 @@ const Dashboard = () => {
             />
           </div>
           <div className="form-control">
-            <label htlmFor="repetitions">Repetitions: </label>
+            <label htlmfor="repetitions">Repetitions: </label>
             <input
               type="number"
               id="repetitions"
@@ -158,6 +168,7 @@ const Dashboard = () => {
             <button className="btn" onClick={loadSets}>Show more...</button>
             {message.show ? <p>{message.message}</p> : ""}
             </ul>
+            </div> : <Login/>}
         </div>
     )
 }

@@ -7,7 +7,6 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import { AuthenticationProvider } from "./components/AuthenticationProvider";
 
- 
 const App = () => { 
   return ( 
     <div className="App"> 

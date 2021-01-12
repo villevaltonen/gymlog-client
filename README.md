@@ -1,6 +1,6 @@
 ## GYMLOG-CLIENT
 
-This is an simple user interface for [gymlog-go](https://github.com/villevaltonen/gymlog-go). The client application is built with React and Redux.
+This is an simple user interface for [gymlog-go](https://github.com/villevaltonen/gymlog-go). The client application is built with React.
 
 ### Run the application
 
@@ -14,11 +14,7 @@ npm run start
 ### TODO
 
 - Home page
-- Navbar
-  - auth / no auth for private routes
 - Logout
-- Dashboard for sets
-  - timestamps are something wrong when using add set
 - Styling
 - Cookies
   - Notification

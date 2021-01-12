@@ -1,4 +1,5 @@
 import { React, useState } from 'react';
+import { AuthenticationProvider, useAuthentication } from "./AuthenticationProvider";
 
 const Login = () => {
     const [credentials, setCredentials] = useState({
@@ -9,6 +10,7 @@ const Login = () => {
       show: false,
       message: "",
     });
+    const [isAuthenticated, setIsAuthenticated] = useAuthentication()
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -24,13 +26,12 @@ const Login = () => {
              console.log(res);
              return res.json();
            }).then((data) => {
-              console.log(data);
-
              if(!data.error) {
                setMessage({
                  show: true,
                  message: "Success!"
                })
+               setIsAuthenticated(true);
              } else {
                setMessage({
                  show: true,
@@ -53,6 +54,7 @@ const Login = () => {
     }
 
     return (
+      <AuthenticationProvider>
         <div>
             <h1>Login</h1>
              <article>
@@ -84,6 +86,7 @@ const Login = () => {
         </form>
       </article>
         </div>
+        </AuthenticationProvider>
     );
 }
 
