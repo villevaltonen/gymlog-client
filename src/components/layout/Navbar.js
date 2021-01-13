@@ -9,6 +9,10 @@ const Navbar = () => {
     return
   }, [isAuthenticated])
 
+  const logout = () => {
+    setIsAuthenticated(false);
+  }
+
   return (
     <AuthenticationProvider>
       <nav>
@@ -16,10 +20,11 @@ const Navbar = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          {isAuthenticated ? "" : <li><Link to="/login">Login</Link></li>}
+          {isAuthenticated ? "" : <li><Link to="/signup">Sign up</Link></li>}
           <li> 
             <Link to="/dashboard">Dashboard</Link>
           </li>
+          {isAuthenticated ? <li><button onClick={logout}>Logout</button></li> : ""}
         </ul>
       </nav>
     </AuthenticationProvider>

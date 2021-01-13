@@ -55,20 +55,31 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
-        fetch(`/api/v1/sets?skip=0&limit=5`, { 
-            method: "GET",
-            credentials: "include"
-        }).then((res) => {
-            return res.json();
-        }).then((data) => {
-            if(!data.error) {
-                setResultList(resultList => resultList = {
-                    sets: resultList.sets.concat(data.sets),
-                    skip: resultList.sets.length + data.sets.length,
-                    limit: 5
-                });
-            }
-        })
+        if(isAuthenticated === true) {
+            fetch(`/api/v1/sets?skip=0&limit=5`, { 
+                method: "GET",
+                credentials: "include"
+            }).then((res) => {
+                return res.json();
+            }).then((data) => {
+                if(!data.error) {
+
+                    setResultList(resultList => resultList = {
+                        sets: data.sets,
+                        skip: resultList.sets.length + data.sets.length,
+                        limit: 5
+                    });
+                }
+            })
+        }
+
+        if(!isAuthenticated) {
+            setResultList(resultList => resultList = {
+                sets: [],
+                skip: 0,
+                limit: 5
+            })
+        }
     }, [isAuthenticated]);
 
     const handleChange = (e) => {
