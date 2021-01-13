@@ -20,13 +20,49 @@ const Dashboard = () => {
     });
     const [isAuthenticated, setIsAuthenticated] = useAuthentication();
 
+        useEffect(() => {
+        if(isAuthenticated === true) {
+            fetch(`/api/v1/sets?skip=0&limit=5`, { 
+                method: "GET",
+                credentials: "include"
+            }).then((res) => {
+                return res.json();
+            }).then((data) => {
+                if(!data.error) {
+
+                    setResultList(resultList => resultList = {
+                        sets: data.sets,
+                        skip: resultList.sets.length + data.sets.length,
+                        limit: 5
+                    });
+                }
+            });
+
+            setMessage({
+                show: false,
+                message: ""
+            })
+        }
+
+        if(!isAuthenticated) {
+            setResultList(resultList => resultList = {
+                sets: [],
+                skip: 0,
+                limit: 5
+            })
+        }
+    }, [isAuthenticated]);
+
     const loadSets = () => {
          try {
             fetch(`/api/v1/sets?skip=${resultList.skip}&limit=${resultList.limit}`, { 
             method: "GET",
             credentials: "include"
            }).then((res) => {
-             return res.json();
+               if(res.status === 401) {
+                   setIsAuthenticated(false);
+               }
+               return res.json();
            }).then((data) => {
              if(!data.error) {
                  if(data.sets.length === 0) {
@@ -54,33 +90,35 @@ const Dashboard = () => {
           }
     }
 
-    useEffect(() => {
-        if(isAuthenticated === true) {
-            fetch(`/api/v1/sets?skip=0&limit=5`, { 
-                method: "GET",
-                credentials: "include"
+    const deleteSet = (id) => {
+        try {
+            fetch(`/api/v1/sets/${id}`, { 
+                method: "DELETE",
+                credentials: "include",
             }).then((res) => {
+                if(res.status === 401) {
+                    setIsAuthenticated(false);
+                }
                 return res.json();
             }).then((data) => {
                 if(!data.error) {
-
                     setResultList(resultList => resultList = {
-                        sets: data.sets,
-                        skip: resultList.sets.length + data.sets.length,
+                        sets: resultList.sets.filter(set => set.id !== id),
+                        skip: resultList.sets.length - 1,
                         limit: 5
-                    });
+                    })
+                    console.log(resultList);
+                } else {
+                    setMessage({
+                        show: true,
+                        message: data.error,
+                    })
                 }
-            })
-        }
-
-        if(!isAuthenticated) {
-            setResultList(resultList => resultList = {
-                sets: [],
-                skip: 0,
-                limit: 5
-            })
-        }
-    }, [isAuthenticated]);
+            });
+          } catch(err) {
+            console.log(err);
+          }
+    }
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -101,6 +139,9 @@ const Dashboard = () => {
                         repetitions: parseInt(set.repetitions)
                     })
                 }).then((res) => {
+                    if(res.status === 401) {
+                        setIsAuthenticated(false);
+                    }
                     return res.json();
                 }).then((data) => {
                     if(!data.error) {
@@ -173,7 +214,7 @@ const Dashboard = () => {
                 { resultList.sets.map((set) => {
                 const { id, exercise, weight, repetitions, created } = set;
                 return (
-                    <li key={id}>{exercise} {weight} {repetitions} {created}</li>
+                    <li key={id}>{exercise} {weight} {repetitions} {created} <button onClick={() => {deleteSet(id)}}>Delete</button></li>
                 ); }
             )}
             <button className="btn" onClick={loadSets}>Show more...</button>

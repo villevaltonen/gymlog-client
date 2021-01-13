@@ -13,8 +13,7 @@ npm run start
 
 ### TODO
 
-- Home page
-- Logout
+- Edit set, if needed
 - Styling
 - Cookies
   - Notification
