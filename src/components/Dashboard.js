@@ -24,7 +24,7 @@ const Dashboard = () => {
         const tokenAge = 60 * 1000; // ms
         const current = new Date();
         const result = current - authentication.loginTime;
-        console.log(result + " " + tokenAge)
+        
         if(result >= 30 * 1000 && result <= tokenAge) {
             try {
                 fetch("/api/users/refresh", { 
@@ -54,7 +54,7 @@ const Dashboard = () => {
         }
     }
 
-    const loadSets = () => {
+    const loadSets = (e) => {
         checkRefresh();
         try {
            fetch(`/api/v1/sets?skip=${resultList.skip}&limit=${resultList.limit}`, { 
