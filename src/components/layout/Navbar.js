@@ -12,7 +12,9 @@ const Navbar = () => {
   const logout = () => {
     setAuthentication({
       ...authentication,
-      isAuthenticated: false
+      isAuthenticated: false,
+      loginTime: "",
+      credentials: {},
     });
   }
 
