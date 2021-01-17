@@ -6,42 +6,53 @@ const Login = () => {
         username: "",
         password: "",
     });
-    const [ message, setMessage] = useState({
+    const [message, setMessage] = useState({
       show: false,
       message: "",
     });
-    const [isAuthenticated, setIsAuthenticated] = useAuthentication()
+    const [authentication, setAuthentication] = useAuthentication()
+
+    const login = () => {
+      try {
+        fetch("/api/users/login", { 
+        method: "POST",
+        body: JSON.stringify(credentials),
+        credentials: "include"
+        }).then((res) => {
+          return res.json();
+        }).then((data) => {
+          if(!data.error) {
+            setMessage({
+              show: true,
+              message: "Success!"
+            })
+            const current = new Date()
+            setAuthentication({
+              ...authentication,
+              isAuthenticated: true,
+              loginTime: current,
+              credentials: {
+                username: credentials.username,
+                password: credentials.password,
+              }
+            });
+          } else {
+            setMessage({
+              show: true,
+              message: data.error,
+            })
+          }
+        });
+      } catch(err) {
+        console.log(err);
+      }
+    }
 
     const handleSubmit = (e) => {
       e.preventDefault();
       // Verify all fields are filled
       if (credentials.username && credentials.password) {
-          console.log(window.location.origin)
-          try {
-            fetch("/api/users/login", { 
-            method: "POST",
-            body: JSON.stringify(credentials),
-            credentials: "include"
-           }).then((res) => {
-             console.log(res);
-             return res.json();
-           }).then((data) => {
-             if(!data.error) {
-               setMessage({
-                 show: true,
-                 message: "Success!"
-               })
-               setIsAuthenticated(true);
-             } else {
-               setMessage({
-                 show: true,
-                 message: data.error,
-               })
-             }
-           });
-          } catch(err) {
-            console.log(err);
-          }
+        login();
       } else {
         setMessage({...message, show: true, message: "All fields are required"});
       }

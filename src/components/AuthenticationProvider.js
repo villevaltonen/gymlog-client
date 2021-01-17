@@ -11,8 +11,15 @@ const useAuthentication = () => {
 }
 
 const AuthenticationProvider = (props) => {
-    const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-    const value = React.useMemo(() => [isAuthenticated, setIsAuthenticated], [isAuthenticated]);
+    const [authentication, setAuthentication] = React.useState({
+        isAuthenticated: false,
+        loginTime: "",
+        credentials: {
+            username: "",
+            password: "",
+        }
+    });
+    const value = React.useMemo(() => [authentication, setAuthentication], [authentication]);
     return <AuthenticationContext.Provider value={value} {...props}/>
 }
 

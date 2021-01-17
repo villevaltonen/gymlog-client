@@ -3,14 +3,17 @@ import { Link } from 'react-router-dom'
 import { AuthenticationProvider, useAuthentication } from "../AuthenticationProvider";
 
 const Navbar = () => {
-  const [isAuthenticated, setIsAuthenticated] = useAuthentication() 
+  const [authentication, setAuthentication] = useAuthentication() 
 
   useEffect(() => {
     return
-  }, [isAuthenticated])
+  }, [authentication])
 
   const logout = () => {
-    setIsAuthenticated(false);
+    setAuthentication({
+      ...authentication,
+      isAuthenticated: false
+    });
   }
 
   return (
@@ -20,11 +23,11 @@ const Navbar = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          {isAuthenticated ? "" : <li><Link to="/signup">Sign up</Link></li>}
+          {authentication.isAuthenticated ? "" : <li><Link to="/signup">Sign up</Link></li>}
           <li> 
             <Link to="/dashboard">Dashboard</Link>
           </li>
-          {isAuthenticated ? <li><button onClick={logout}>Logout</button></li> : ""}
+          {authentication.isAuthenticated ? <li><button onClick={logout}>Logout</button></li> : ""}
         </ul>
       </nav>
     </AuthenticationProvider>
