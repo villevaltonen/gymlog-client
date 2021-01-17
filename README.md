@@ -18,6 +18,4 @@ npm run start
 - Styling
 - Cookies
   - Notification
-  - Refresh token
-    - Add "start time" to provider on login/refresh and compare this to current upon requests?
 - Tests
