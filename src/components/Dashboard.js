@@ -20,7 +20,7 @@ const Dashboard = () => {
     });
     const [isAuthenticated, setIsAuthenticated] = useAuthentication();
 
-        useEffect(() => {
+    useEffect(() => {
         if(isAuthenticated === true) {
             fetch(`/api/v1/sets?skip=0&limit=5`, { 
                 method: "GET",
@@ -42,9 +42,7 @@ const Dashboard = () => {
                 show: false,
                 message: ""
             })
-        }
-
-        if(!isAuthenticated) {
+        } else {
             setResultList(resultList => resultList = {
                 sets: [],
                 skip: 0,
