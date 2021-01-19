@@ -4,7 +4,7 @@ This is an simple user interface for [gymlog-api](https://github.com/villevalton
 
 ### Run the application
 
-1. Ensure the backend and PostgreSQL-database are up and running
+1. Ensure backend and database are up and running
 2. Execute following line:
 
 ```bash

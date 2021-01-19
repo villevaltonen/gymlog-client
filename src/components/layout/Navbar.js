@@ -1,13 +1,16 @@
-import { React, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { AuthenticationProvider, useAuthentication } from "../AuthenticationProvider";
+import { React, useEffect } from "react";
+import { Link } from "react-router-dom";
+import {
+  AuthenticationProvider,
+  useAuthentication,
+} from "../AuthenticationProvider";
 
 const Navbar = () => {
-  const [authentication, setAuthentication] = useAuthentication() 
+  const [authentication, setAuthentication] = useAuthentication();
 
   useEffect(() => {
-    return
-  }, [authentication])
+    return;
+  }, [authentication]);
 
   const logout = () => {
     setAuthentication({
@@ -15,7 +18,7 @@ const Navbar = () => {
       loginTime: "",
       credentials: {},
     });
-  }
+  };
 
   return (
     <AuthenticationProvider>
@@ -24,15 +27,27 @@ const Navbar = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          {authentication.isAuthenticated ? "" : <li><Link to="/signup">Sign up</Link></li>}
-          <li> 
+          {authentication.isAuthenticated ? (
+            ""
+          ) : (
+            <li>
+              <Link to="/signup">Sign up</Link>
+            </li>
+          )}
+          <li>
             <Link to="/dashboard">Dashboard</Link>
           </li>
-          {authentication.isAuthenticated ? <li><button onClick={logout}>Logout</button></li> : ""}
+          {authentication.isAuthenticated ? (
+            <li>
+              <button onClick={logout}>Logout</button>
+            </li>
+          ) : (
+            ""
+          )}
         </ul>
       </nav>
     </AuthenticationProvider>
   );
 };
 
-export default Navbar
+export default Navbar;

@@ -5,10 +5,11 @@ import Register from "./components/Signup";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import { AuthenticationProvider } from "./components/AuthenticationProvider";
+import CookieConsent from "./components/layout/CookieConsent";
 
-const App = () => { 
-  return ( 
-    <div className="App"> 
+const App = () => {
+  return (
+    <div className="App">
       <AuthenticationProvider>
         <Router>
           <Navbar />
@@ -24,10 +25,12 @@ const App = () => {
             </Route>
           </Switch>
         </Router>
-        <Footer/>
+        <CookieConsent />
+        <Footer />
       </AuthenticationProvider>
-    </div> 
+      {}
+    </div>
   );
-}
- 
+};
+
 export default App;
