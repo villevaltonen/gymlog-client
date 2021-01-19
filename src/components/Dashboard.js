@@ -1,14 +1,10 @@
 import { React, useState } from "react";
 import Login from "./Login";
-import { useAuthentication } from "./AuthenticationProvider";
+import { useAuthentication } from "./providers/AuthenticationProvider";
+import { useResult } from "./providers/ResultProvider";
 
 const Dashboard = () => {
-  const [resultList, setResultList] = useState({
-    results: 0,
-    skip: 0,
-    limit: 5, // TODO: increase this for real use
-    sets: [],
-  });
+  const [result, setResult] = useResult();
   const [set, setSet] = useState({
     exercise: "",
     weight: 0.0,
@@ -68,7 +64,7 @@ const Dashboard = () => {
   const loadSets = (e) => {
     middleware();
     try {
-      fetch(`/api/v1/sets?skip=${resultList.skip}&limit=${resultList.limit}`, {
+      fetch(`/api/v1/sets?skip=${result.skip}&limit=${result.limit}`, {
         method: "GET",
         credentials: "include",
       })
@@ -89,9 +85,9 @@ const Dashboard = () => {
                 message: "No more sets found",
               });
             } else {
-              const newSets = resultList.sets.concat(data.sets);
-              setResultList({
-                ...resultList,
+              const newSets = result.sets.concat(data.sets);
+              setResult({
+                ...result,
                 sets: newSets,
                 skip: newSets.length,
               });
@@ -126,12 +122,12 @@ const Dashboard = () => {
         })
         .then((data) => {
           if (!data.error) {
-            setResultList(
-              (resultList) =>
-                (resultList = {
-                  ...resultList,
-                  sets: resultList.sets.filter((set) => set.id !== id),
-                  skip: resultList.sets.length - 1,
+            setResult(
+              (result) =>
+                (result = {
+                  ...result,
+                  sets: result.sets.filter((set) => set.id !== id),
+                  skip: result.sets.length - 1,
                 })
             );
           } else {
@@ -187,11 +183,11 @@ const Dashboard = () => {
                 },
               ];
 
-              setResultList(
-                (resultList) =>
-                  (resultList = {
-                    sets: newSet.concat(resultList.sets),
-                    skip: resultList.sets.length + 1,
+              setResult(
+                (result) =>
+                  (result = {
+                    sets: newSet.concat(result.sets),
+                    skip: result.sets.length + 1,
                     limit: 5,
                   })
               );
@@ -206,6 +202,10 @@ const Dashboard = () => {
         console.log(err);
       }
     }
+  };
+
+  const editSet = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -248,7 +248,7 @@ const Dashboard = () => {
             </button>
           </form>
           <ul>
-            {resultList.sets.map((set) => {
+            {result.sets.map((set) => {
               const { id, exercise, weight, repetitions, created } = set;
               return (
                 <li key={id}>
@@ -260,6 +260,7 @@ const Dashboard = () => {
                   >
                     Delete
                   </button>
+                  <button onClick={editSet}>Edit</button>
                 </li>
               );
             })}
@@ -274,6 +275,10 @@ const Dashboard = () => {
       )}
     </div>
   );
+};
+
+const EditSet = (show, set) => {
+  <p>Edit set here</p>;
 };
 
 export default Dashboard;

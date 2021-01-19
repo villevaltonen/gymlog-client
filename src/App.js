@@ -4,8 +4,9 @@ import Dashboard from "./components/Dashboard";
 import Register from "./components/Signup";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import { AuthenticationProvider } from "./components/AuthenticationProvider";
+import { AuthenticationProvider } from "./components/providers/AuthenticationProvider";
 import CookieConsent from "./components/layout/CookieConsent";
+import { ResultProvider } from "./components/providers/ResultProvider";
 
 const App = () => {
   return (
@@ -18,7 +19,9 @@ const App = () => {
               <Landing />
             </Route>
             <Route exact path="/dashboard">
-              <Dashboard />
+              <ResultProvider>
+                <Dashboard />
+              </ResultProvider>
             </Route>
             <Route exact path="/signup">
               <Register />

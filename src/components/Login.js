@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import {
   AuthenticationProvider,
   useAuthentication,
-} from "./AuthenticationProvider";
+} from "./providers/AuthenticationProvider";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({

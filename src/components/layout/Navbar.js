@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import {
   AuthenticationProvider,
   useAuthentication,
-} from "../AuthenticationProvider";
+} from "../providers/AuthenticationProvider";
 
 const Navbar = () => {
   const [authentication, setAuthentication] = useAuthentication();
@@ -14,6 +14,7 @@ const Navbar = () => {
 
   const logout = () => {
     setAuthentication({
+      ...authentication,
       isAuthenticated: false,
       loginTime: "",
       credentials: {},

@@ -16,6 +16,5 @@ npm run start
 - Edit set, if needed
   - Maybe a modal window?
 - Styling
-- Cookies
-  - Notification
 - Tests
+- Timezone formatting on set list

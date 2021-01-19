@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { useAuthentication } from "./AuthenticationProvider";
+import { useAuthentication } from "./providers/AuthenticationProvider";
 
 const Signup = () => {
   const [credentials, setCredentials] = useState({

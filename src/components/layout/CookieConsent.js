@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuthentication } from "../AuthenticationProvider";
+import { useAuthentication } from "../providers/AuthenticationProvider";
 
 const CookieConsent = () => {
   const [authentication, setAuthentication] = useAuthentication();
