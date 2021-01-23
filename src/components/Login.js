@@ -19,9 +19,9 @@ const StyledLabel = styled.label`
 `;
 
 const StyledButtonDiv = styled.div`
-    display: grid:
-    justify-content: center;
-  `;
+  display: grid:
+  justify-content: center;
+`;
 
 const StyledButton = styled.button`
   margin-top: 10px;

@@ -223,6 +223,11 @@ const Dashboard = () => {
                   skip: result.sets.length - 1,
                 })
             );
+            setBottomMessage({
+              ...bottomMessage,
+              show: false,
+              message: "",
+            });
           } else {
             setBottomMessage({
               show: true,
