@@ -16,6 +16,7 @@ const StyledNavbarDiv = styled.nav`
   left: 0;
   width: 100%;
   justify-content: center;
+  z-index: 50;
 `;
 
 const StyledNavbar = styled.nav`

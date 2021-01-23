@@ -27,7 +27,6 @@ const StyledButton = styled.button`
   border: none;
   color: white;
   font-size: 16px;
-  outline-color: white;
   border: 2px solid #034282;
   border-radius: 5px;
 `;
@@ -49,7 +48,6 @@ const Signup = () => {
   const [errorMessage, setErrorMessage] = useState({
     show: false,
     message: "",
-    color: "",
   });
   const [success, setSuccess] = useState({
     show: false,

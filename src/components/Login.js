@@ -30,7 +30,6 @@ const StyledButton = styled.button`
   border: none;
   color: white;
   font-size: 16px;
-  outline-color: white;
   border: 2px solid #034282;
   border-radius: 5px;
 `;
@@ -143,7 +142,11 @@ const Login = () => {
               <StyledButton type="submit" onClick={handleSubmit}>
                 Sign in
               </StyledButton>
-              {message.show ? <p>{message.message}</p> : ""}
+              {message.show ? (
+                <StyledErrorMessage>{message.message}</StyledErrorMessage>
+              ) : (
+                ""
+              )}
             </StyledButtonDiv>
           </form>
         </div>

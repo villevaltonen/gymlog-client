@@ -12,6 +12,8 @@ const StyledDashboard = styled.div`
   width: 90vw;
   max-width: 700px;
   justify-content: left;
+  z-index: 5;
+  background: white;
 `;
 
 const StyledForm = styled.form`
@@ -41,7 +43,6 @@ const StyledButton = styled.button`
   background-color: #0388fc;
   color: white;
   font-size: 16px;
-  outline-color: white;
   border: 2px solid #034282;
   border-radius: 5px;
 `;
@@ -51,7 +52,6 @@ const StyledDeleteButton = styled.button`
   border: none;
   color: white;
   font-size: 16px;
-  outline-color: white;
   border: 2px solid red;
   border-radius: 5px;
 `;
@@ -81,7 +81,11 @@ const Dashboard = () => {
     weight: 0.0,
     repetitions: 0,
   });
-  const [message, setMessage] = useState({
+  const [bottomMessage, setBottomMessage] = useState({
+    show: false,
+    message: "",
+  });
+  const [addSetMessage, setAddSetMessage] = useState({
     show: false,
     message: "",
   });
@@ -114,7 +118,7 @@ const Dashboard = () => {
                   loginTime: current,
                 });
               } else {
-                setMessage({
+                setBottomMessage({
                   show: true,
                   message: data.error,
                 });
@@ -125,7 +129,7 @@ const Dashboard = () => {
         }
       }
     } else {
-      setMessage({
+      setBottomMessage({
         show: true,
         message: "Cookies are required for using the service",
       });
@@ -151,7 +155,7 @@ const Dashboard = () => {
         .then((data) => {
           if (!data.error) {
             if (data.sets.length === 0) {
-              setMessage({
+              setBottomMessage({
                 show: true,
                 message: "No more sets found",
               });
@@ -175,14 +179,14 @@ const Dashboard = () => {
                 sets: newSets,
                 skip: newSets.length,
               });
-              setMessage({
-                ...message,
+              setBottomMessage({
+                ...bottomMessage,
                 show: false,
                 message: "",
               });
             }
           } else {
-            setMessage({
+            setBottomMessage({
               show: true,
               message: data.error,
             });
@@ -220,7 +224,7 @@ const Dashboard = () => {
                 })
             );
           } else {
-            setMessage({
+            setBottomMessage({
               show: true,
               message: data.error,
             });
@@ -280,8 +284,12 @@ const Dashboard = () => {
                     limit: 5,
                   })
               );
+              setAddSetMessage({
+                ...addSetMessage,
+                show: false,
+              });
             } else {
-              setMessage({
+              setAddSetMessage({
                 show: true,
                 message: data.error,
               });
@@ -290,6 +298,11 @@ const Dashboard = () => {
       } catch (err) {
         console.log(err);
       }
+    } else {
+      setAddSetMessage({
+        show: true,
+        message: "All fields required",
+      });
     }
   };
 
@@ -304,16 +317,18 @@ const Dashboard = () => {
           <StyledTableData>{repetitions}</StyledTableData>
           <StyledTableData>{timestamp.date}</StyledTableData>
           <StyledTableData>{timestamp.time}</StyledTableData>
-          <StyledDeleteButton
-            onClick={() => {
-              deleteSet(id);
-            }}
-          >
-            Delete
-          </StyledDeleteButton>
-          {/* <td>
+          <StyledTableData>
+            <StyledDeleteButton
+              onClick={() => {
+                deleteSet(id);
+              }}
+            >
+              Delete
+            </StyledDeleteButton>
+            {/* <td>
             <button onClick={editSet}>Edit</button>
           </td> */}
+          </StyledTableData>
         </StyledTableRow>
       );
     });
@@ -352,6 +367,11 @@ const Dashboard = () => {
               Add set
             </StyledButton>
           </StyledForm>
+          {addSetMessage.show ? (
+            <StyledErrorMessage>{addSetMessage.message}</StyledErrorMessage>
+          ) : (
+            ""
+          )}
 
           <StyledTable>
             <StyledTableHead>
@@ -368,8 +388,8 @@ const Dashboard = () => {
           <StyledButton className="btn" onClick={getSets}>
             Show more...
           </StyledButton>
-          {message.show ? (
-            <StyledErrorMessage>{message.message}</StyledErrorMessage>
+          {bottomMessage.show ? (
+            <StyledErrorMessage>{bottomMessage.message}</StyledErrorMessage>
           ) : (
             ""
           )}
