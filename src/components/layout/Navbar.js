@@ -5,6 +5,49 @@ import {
   useAuthentication,
 } from "../providers/AuthenticationProvider";
 import { ResultProvider, useResult } from "../providers/ResultProvider";
+import styled from "styled-components";
+
+const StyledNavbarDiv = styled.nav`
+  display: grid;
+  height: 50px;
+  background-color: #0388fc;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  justify-content: center;
+`;
+
+const StyledNavbar = styled.nav`
+  width: 90vw;
+  max-width: 700px;
+`;
+
+const StyledNavLiLeft = styled.li`
+  float: left;
+  list-style: none;
+  padding-left: 20px;
+`;
+
+const StyledNavLiRight = styled.li`
+  float: right;
+  list-style: none;
+  padding-right: 20px;
+`;
+
+const StyledLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+  font-family: Arial;
+  font-size: 18px;
+`;
+
+const StyledButton = styled.button`
+  background-color: #0388fc;
+  border: none;
+  color: white;
+  font-size: 18px;
+`;
 
 const Navbar = () => {
   const [authentication, setAuthentication] = useAuthentication();
@@ -32,30 +75,32 @@ const Navbar = () => {
   return (
     <AuthenticationProvider>
       <ResultProvider>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            {authentication.isAuthenticated ? (
-              ""
-            ) : (
-              <li>
-                <Link to="/signup">Sign up</Link>
-              </li>
-            )}
-            <li>
-              <Link to="/dashboard">Dashboard</Link>
-            </li>
-            {authentication.isAuthenticated ? (
-              <li>
-                <button onClick={logout}>Logout</button>
-              </li>
-            ) : (
-              ""
-            )}
-          </ul>
-        </nav>
+        <StyledNavbarDiv>
+          <StyledNavbar>
+            <ul>
+              <StyledNavLiLeft>
+                <StyledLink to="/">Home</StyledLink>
+              </StyledNavLiLeft>
+              {authentication.isAuthenticated ? (
+                ""
+              ) : (
+                <StyledNavLiLeft>
+                  <StyledLink to="/signup">Sign up</StyledLink>
+                </StyledNavLiLeft>
+              )}
+              <StyledNavLiLeft>
+                <StyledLink to="/dashboard">Dashboard</StyledLink>
+              </StyledNavLiLeft>
+              {authentication.isAuthenticated ? (
+                <StyledNavLiRight>
+                  <StyledButton onClick={logout}>Logout</StyledButton>
+                </StyledNavLiRight>
+              ) : (
+                ""
+              )}
+            </ul>
+          </StyledNavbar>
+        </StyledNavbarDiv>
       </ResultProvider>
     </AuthenticationProvider>
   );

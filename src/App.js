@@ -7,10 +7,17 @@ import Footer from "./components/layout/Footer";
 import { AuthenticationProvider } from "./components/providers/AuthenticationProvider";
 import CookieConsent from "./components/layout/CookieConsent";
 import { ResultProvider } from "./components/providers/ResultProvider";
+import styled from "styled-components";
+
+const StyledDiv = styled.div`
+  margin: 0 2rem;
+  display: grid;
+  justify-content: center;
+`;
 
 const App = () => {
   return (
-    <div className="App">
+    <StyledDiv className="App">
       <AuthenticationProvider>
         <Router>
           <ResultProvider>
@@ -34,7 +41,7 @@ const App = () => {
         <Footer />
       </AuthenticationProvider>
       {}
-    </div>
+    </StyledDiv>
   );
 };
 
