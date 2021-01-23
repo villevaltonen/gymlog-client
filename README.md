@@ -17,3 +17,4 @@ npm run start
 - Tests
 - Improve styling
 - useReducer for providers (?)
+- Cleaning up
