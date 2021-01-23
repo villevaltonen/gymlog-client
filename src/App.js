@@ -37,7 +37,6 @@ const App = () => {
             </Route>
           </Switch>
         </Router>
-        <CookieConsent />
         <Footer />
       </AuthenticationProvider>
       {}
