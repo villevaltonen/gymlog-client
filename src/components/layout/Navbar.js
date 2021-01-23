@@ -22,7 +22,7 @@ const StyledNavbarDiv = styled.nav`
 const StyledNavbar = styled.nav`
   width: 90vw;
   max-width: 700px;
-  margin-left: -80px;
+  margin-left: -20px;
 `;
 
 const StyledNavLiLeft = styled.li`
@@ -34,7 +34,6 @@ const StyledNavLiLeft = styled.li`
 const StyledNavLiRight = styled.li`
   float: right;
   list-style: none;
-  padding-right: 20px;
 `;
 
 const StyledLink = styled(Link)`
@@ -85,21 +84,22 @@ const Navbar = () => {
                 <StyledLink to="/">Home</StyledLink>
               </StyledNavLiLeft>
               {authentication.isAuthenticated ? (
-                ""
+                <StyledNavLiLeft>
+                  <StyledLink to="/dashboard">Dashboard</StyledLink>
+                </StyledNavLiLeft>
               ) : (
                 <StyledNavLiLeft>
-                  <StyledLink to="/signup">Sign up</StyledLink>
+                  <StyledLink to="/dashboard">Login</StyledLink>
                 </StyledNavLiLeft>
               )}
-              <StyledNavLiLeft>
-                <StyledLink to="/dashboard">Dashboard</StyledLink>
-              </StyledNavLiLeft>
               {authentication.isAuthenticated ? (
                 <StyledNavLiRight>
                   <StyledButton onClick={logout}>Logout</StyledButton>
                 </StyledNavLiRight>
               ) : (
-                ""
+                <StyledNavLiRight>
+                  <StyledLink to="/signup">Sign up</StyledLink>
+                </StyledNavLiRight>
               )}
             </ul>
           </StyledNavbar>

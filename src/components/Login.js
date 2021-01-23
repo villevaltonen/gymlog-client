@@ -9,7 +9,6 @@ const StyledLogin = styled.div`
   display: grid;
   margin-top: 50px;
   font-family: Arial;
-  width: 90vw;
   max-width: 700px;
   justify-content: left;
 `;

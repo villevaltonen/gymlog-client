@@ -9,7 +9,7 @@ const StyledDashboard = styled.div`
   display: grid;
   margin-top: 50px;
   font-family: Arial;
-  width: 90vw;
+  // width: 90vw;
   max-width: 700px;
   justify-content: left;
   z-index: 5;
@@ -355,7 +355,7 @@ const Dashboard = () => {
               value={set.weight}
               onChange={handleChange}
             />
-            <StyledLabel htlmfor="repetitions">Repetitions: </StyledLabel>
+            <StyledLabel htlmfor="repetitions">Reps: </StyledLabel>
             <StyledInputNumber
               type="number"
               id="repetitions"
