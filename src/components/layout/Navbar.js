@@ -47,6 +47,7 @@ const StyledButton = styled.button`
   border: none;
   color: white;
   font-size: 18px;
+  outline-color: white;
 `;
 
 const Navbar = () => {
