@@ -14,7 +14,6 @@ npm run start
 ### TODO
 
 - Edit set, if needed
-  - Maybe a modal window?
 - Styling
 - Tests
-- Timezone formatting on set list
+- useReducer for providers?

@@ -13,7 +13,9 @@ const App = () => {
     <div className="App">
       <AuthenticationProvider>
         <Router>
-          <Navbar />
+          <ResultProvider>
+            <Navbar />
+          </ResultProvider>
           <Switch>
             <Route exact path="/">
               <Landing />

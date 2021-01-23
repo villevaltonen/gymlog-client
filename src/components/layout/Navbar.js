@@ -4,9 +4,11 @@ import {
   AuthenticationProvider,
   useAuthentication,
 } from "../providers/AuthenticationProvider";
+import { ResultProvider, useResult } from "../providers/ResultProvider";
 
 const Navbar = () => {
   const [authentication, setAuthentication] = useAuthentication();
+  const [result, setResult] = useResult();
 
   useEffect(() => {
     return;
@@ -19,34 +21,42 @@ const Navbar = () => {
       loginTime: "",
       credentials: {},
     });
+    setResult({
+      results: 0,
+      skip: 0,
+      limit: 5,
+      sets: [],
+    });
   };
 
   return (
     <AuthenticationProvider>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          {authentication.isAuthenticated ? (
-            ""
-          ) : (
+      <ResultProvider>
+        <nav>
+          <ul>
             <li>
-              <Link to="/signup">Sign up</Link>
+              <Link to="/">Home</Link>
             </li>
-          )}
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          {authentication.isAuthenticated ? (
+            {authentication.isAuthenticated ? (
+              ""
+            ) : (
+              <li>
+                <Link to="/signup">Sign up</Link>
+              </li>
+            )}
             <li>
-              <button onClick={logout}>Logout</button>
+              <Link to="/dashboard">Dashboard</Link>
             </li>
-          ) : (
-            ""
-          )}
-        </ul>
-      </nav>
+            {authentication.isAuthenticated ? (
+              <li>
+                <button onClick={logout}>Logout</button>
+              </li>
+            ) : (
+              ""
+            )}
+          </ul>
+        </nav>
+      </ResultProvider>
     </AuthenticationProvider>
   );
 };

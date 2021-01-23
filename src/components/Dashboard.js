@@ -1,4 +1,6 @@
+import { render } from "@testing-library/react";
 import { React, useState } from "react";
+import { formatDate } from "../utils/format";
 import Login from "./Login";
 import { useAuthentication } from "./providers/AuthenticationProvider";
 import { useResult } from "./providers/ResultProvider";
@@ -61,7 +63,7 @@ const Dashboard = () => {
     }
   };
 
-  const loadSets = (e) => {
+  const getSets = (e) => {
     middleware();
     try {
       fetch(`/api/v1/sets?skip=${result.skip}&limit=${result.limit}`, {
@@ -85,11 +87,29 @@ const Dashboard = () => {
                 message: "No more sets found",
               });
             } else {
+              //   const foo = data.sets.reduce(
+              //     (entryMap, set) =>
+              //       entryMap.set(set.created.substring(0, 10), [
+              //         ...(entryMap.get(set.created.substring(0, 10)) || []),
+              //         set,
+              //       ]),
+              //     new Map()
+              //   );
+              //   for (const [key, value] of foo.entries()) {
+              //     console.log(key);
+              //     foo.get(key).map((set) => console.log(set));
+              //   }
+
               const newSets = result.sets.concat(data.sets);
               setResult({
                 ...result,
                 sets: newSets,
                 skip: newSets.length,
+              });
+              setMessage({
+                ...message,
+                show: false,
+                message: "",
               });
             }
           } else {
@@ -204,8 +224,32 @@ const Dashboard = () => {
     }
   };
 
-  const editSet = (e) => {
-    e.preventDefault();
+  const renderSets = (sets) => {
+    return sets.map((set) => {
+      const { id, exercise, weight, repetitions, created } = set;
+      const timestamp = formatDate(created);
+      return (
+        <tr key={id}>
+          <td>{exercise}</td>
+          <td>{weight}</td>
+          <td>{repetitions}</td>
+          <td>{timestamp.date}</td>
+          <td>{timestamp.time}</td>
+          <td>
+            <button
+              onClick={() => {
+                deleteSet(id);
+              }}
+            >
+              Delete
+            </button>
+          </td>
+          {/* <td>
+            <button onClick={editSet}>Edit</button>
+          </td> */}
+        </tr>
+      );
+    });
   };
 
   return (
@@ -247,38 +291,27 @@ const Dashboard = () => {
               Add set
             </button>
           </form>
-          <ul>
-            {result.sets.map((set) => {
-              const { id, exercise, weight, repetitions, created } = set;
-              return (
-                <li key={id}>
-                  {exercise} {weight} {repetitions} {created}{" "}
-                  <button
-                    onClick={() => {
-                      deleteSet(id);
-                    }}
-                  >
-                    Delete
-                  </button>
-                  <button onClick={editSet}>Edit</button>
-                </li>
-              );
-            })}
-            <button className="btn" onClick={loadSets}>
-              Show more...
-            </button>
-            {message.show ? <p>{message.message}</p> : ""}
-          </ul>
+
+          <table>
+            <tr>
+              <th>Exercise</th>
+              <th>Weight</th>
+              <th>Repetitions</th>
+              <th>Date</th>
+              <th>Time</th>
+            </tr>
+            {renderSets(result.sets)}
+          </table>
+          <button className="btn" onClick={getSets}>
+            Show more...
+          </button>
+          {message.show ? <p>{message.message}</p> : ""}
         </div>
       ) : (
         <Login />
       )}
     </div>
   );
-};
-
-const EditSet = (show, set) => {
-  <p>Edit set here</p>;
 };
 
 export default Dashboard;
