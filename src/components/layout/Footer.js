@@ -4,12 +4,17 @@ import CookieConsent from "../layout/CookieConsent";
 import { useAuthentication } from "../providers/AuthenticationProvider";
 
 const StyledFooter = styled.footer`
-  display: grid;
-  justify-content: center;
   backround-color: white;
   font-family: Arial;
   font-size: 14px;
-  margin-top: 20px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Navbar = () => {

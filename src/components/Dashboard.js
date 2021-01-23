@@ -1,9 +1,78 @@
-import { render } from "@testing-library/react";
 import { React, useState } from "react";
 import { formatDate } from "../utils/format";
 import Login from "./Login";
 import { useAuthentication } from "./providers/AuthenticationProvider";
 import { useResult } from "./providers/ResultProvider";
+import styled from "styled-components";
+
+const StyledDashboard = styled.div`
+  display: grid;
+  margin-top: 50px;
+  font-family: Arial;
+  width: 90vw;
+  max-width: 700px;
+  justify-content: left;
+`;
+
+const StyledForm = styled.form`
+  margin-top: 10px;
+`;
+
+const StyledLabel = styled.label`
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 5px;
+`;
+
+const StyledInputText = styled.input`
+  display: inline-block;
+  width 80px;
+  margin-right: 10px;
+`;
+
+const StyledInputNumber = styled.input`
+  display: inline-block;
+  width 40px;
+  margin-right: 10px;
+`;
+
+const StyledButton = styled.button`
+  margin-top: 10px;
+  background-color: #0388fc;
+  color: white;
+  font-size: 16px;
+  outline-color: white;
+  border: 2px solid #034282;
+  border-radius: 5px;
+`;
+
+const StyledDeleteButton = styled.button`
+  background-color: red;
+  border: none;
+  color: white;
+  font-size: 16px;
+  outline-color: white;
+  border: 2px solid red;
+  border-radius: 5px;
+`;
+
+const StyledErrorMessage = styled.p`
+  color: red;
+`;
+
+const StyledTable = styled.table`
+  margin-top: 20px;
+`;
+
+const StyledTableHead = styled.thead``;
+const StyledTableHeader = styled.th`
+  padding-right: 20px;
+  text-align: left;
+`;
+const StyledTableRow = styled.tr``;
+const StyledTableData = styled.td`
+  padding-right: 20px;
+`;
 
 const Dashboard = () => {
   const [result, setResult] = useResult();
@@ -229,88 +298,86 @@ const Dashboard = () => {
       const { id, exercise, weight, repetitions, created } = set;
       const timestamp = formatDate(created);
       return (
-        <tr key={id}>
-          <td>{exercise}</td>
-          <td>{weight}</td>
-          <td>{repetitions}</td>
-          <td>{timestamp.date}</td>
-          <td>{timestamp.time}</td>
-          <td>
-            <button
-              onClick={() => {
-                deleteSet(id);
-              }}
-            >
-              Delete
-            </button>
-          </td>
+        <StyledTableRow key={id}>
+          <StyledTableData>{exercise}</StyledTableData>
+          <StyledTableData>{weight}</StyledTableData>
+          <StyledTableData>{repetitions}</StyledTableData>
+          <StyledTableData>{timestamp.date}</StyledTableData>
+          <StyledTableData>{timestamp.time}</StyledTableData>
+          <StyledDeleteButton
+            onClick={() => {
+              deleteSet(id);
+            }}
+          >
+            Delete
+          </StyledDeleteButton>
           {/* <td>
             <button onClick={editSet}>Edit</button>
           </td> */}
-        </tr>
+        </StyledTableRow>
       );
     });
   };
 
   return (
-    <div>
+    <StyledDashboard>
       {authentication.isAuthenticated ? (
         <div>
-          <form className="form">
-            <div className="form-control">
-              <label htlmfor="exercise">Exercise: </label>
-              <input
-                type="text"
-                id="exercise"
-                name="exercise"
-                value={set.exercise}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-control">
-              <label htlmfor="weight">Weight: </label>
-              <input
-                type="number"
-                id="weight"
-                name="weight"
-                value={set.weight}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-control">
-              <label htlmfor="repetitions">Repetitions: </label>
-              <input
-                type="number"
-                id="repetitions"
-                name="repetitions"
-                value={set.repetitions}
-                onChange={handleChange}
-              />
-            </div>
-            <button type="submit" onClick={addSet}>
+          <StyledForm>
+            <StyledLabel htlmfor="exercise">Exercise: </StyledLabel>
+            <StyledInputText
+              type="text"
+              id="exercise"
+              name="exercise"
+              value={set.exercise}
+              onChange={handleChange}
+            />
+            <StyledLabel htlmfor="weight">Weight: </StyledLabel>
+            <StyledInputNumber
+              type="number"
+              id="weight"
+              name="weight"
+              value={set.weight}
+              onChange={handleChange}
+            />
+            <StyledLabel htlmfor="repetitions">Repetitions: </StyledLabel>
+            <StyledInputNumber
+              type="number"
+              id="repetitions"
+              name="repetitions"
+              value={set.repetitions}
+              onChange={handleChange}
+            />
+            <StyledButton type="submit" onClick={addSet}>
               Add set
-            </button>
-          </form>
+            </StyledButton>
+          </StyledForm>
 
-          <table>
-            <tr>
-              <th>Exercise</th>
-              <th>Weight</th>
-              <th>Repetitions</th>
-              <th>Date</th>
-              <th>Time</th>
-            </tr>
+          <StyledTable>
+            <StyledTableHead>
+              <StyledTableRow>
+                <StyledTableHeader>Exercise</StyledTableHeader>
+                <StyledTableHeader>Weight</StyledTableHeader>
+                <StyledTableHeader>Reps</StyledTableHeader>
+                <StyledTableHeader>Date</StyledTableHeader>
+                <StyledTableHeader>Time</StyledTableHeader>
+              </StyledTableRow>
+            </StyledTableHead>
             {renderSets(result.sets)}
-          </table>
-          <button className="btn" onClick={getSets}>
+          </StyledTable>
+          <StyledButton className="btn" onClick={getSets}>
             Show more...
-          </button>
-          {message.show ? <p>{message.message}</p> : ""}
+          </StyledButton>
+          {message.show ? (
+            <StyledErrorMessage>{message.message}</StyledErrorMessage>
+          ) : (
+            ""
+          )}
         </div>
       ) : (
         <Login />
       )}
-    </div>
+    </StyledDashboard>
   );
 };
 

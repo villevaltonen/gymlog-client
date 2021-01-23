@@ -13,6 +13,7 @@ const StyledBackgroundDiv = styled.div`
   justify-content: center;
   color: white;
   font-family: Arial;
+  z-index: 10;
 `;
 
 const StyledVisibleCookieConsentDiv = styled.div`

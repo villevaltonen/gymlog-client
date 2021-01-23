@@ -3,6 +3,43 @@ import {
   AuthenticationProvider,
   useAuthentication,
 } from "./providers/AuthenticationProvider";
+import styled from "styled-components";
+
+const StyledLogin = styled.div`
+  display: grid;
+  margin-top: 50px;
+  font-family: Arial;
+  width: 90vw;
+  max-width: 700px;
+  justify-content: left;
+`;
+
+const StyledForm = styled.form``;
+
+const StyledLabel = styled.label`
+  display: block;
+  margin-top: 10px;
+`;
+
+const StyledButtonDiv = styled.div`
+    display: grid:
+    justify-content: center;
+  `;
+
+const StyledButton = styled.button`
+  margin-top: 10px;
+  background-color: #0388fc;
+  border: none;
+  color: white;
+  font-size: 16px;
+  outline-color: white;
+  border: 2px solid #034282;
+  border-radius: 5px;
+`;
+
+const StyledErrorMessage = styled.p`
+  color: red;
+`;
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -82,12 +119,12 @@ const Login = () => {
 
   return (
     <AuthenticationProvider>
-      <div>
-        <h1>Login</h1>
-        <article>
-          <form className="form">
-            <div className="form-control">
-              <label htlmfor="username">Username: </label>
+      <StyledLogin>
+        <div>
+          <h1>Login</h1>
+          <StyledForm>
+            <div>
+              <StyledLabel htlmfor="username">Username: </StyledLabel>
               <input
                 type="text"
                 id="username"
@@ -96,23 +133,23 @@ const Login = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="form-control">
-              <label htlmfor="password1">Password: </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={credentials.password}
-                onChange={handleChange}
-              />
-            </div>
-            <button type="submit" onClick={handleSubmit}>
-              Sign in
-            </button>
-            {message.show ? <p>{message.message}</p> : ""}
-          </form>
-        </article>
-      </div>
+            <StyledLabel htlmfor="password1">Password: </StyledLabel>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
+            />
+            <StyledButtonDiv>
+              <StyledButton type="submit" onClick={handleSubmit}>
+                Sign in
+              </StyledButton>
+              {message.show ? <p>{message.message}</p> : ""}
+            </StyledButtonDiv>
+          </StyledForm>
+        </div>
+      </StyledLogin>
     </AuthenticationProvider>
   );
 };
