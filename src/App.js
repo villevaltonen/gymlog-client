@@ -5,7 +5,6 @@ import Register from "./components/Signup";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import { AuthenticationProvider } from "./components/providers/AuthenticationProvider";
-import CookieConsent from "./components/layout/CookieConsent";
 import { ResultProvider } from "./components/providers/ResultProvider";
 import styled from "styled-components";
 

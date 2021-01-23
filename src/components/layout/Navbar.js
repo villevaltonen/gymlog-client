@@ -21,12 +21,13 @@ const StyledNavbarDiv = styled.nav`
 const StyledNavbar = styled.nav`
   width: 90vw;
   max-width: 700px;
+  margin-left: -80px;
 `;
 
 const StyledNavLiLeft = styled.li`
   float: left;
   list-style: none;
-  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 const StyledNavLiRight = styled.li`
