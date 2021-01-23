@@ -14,8 +14,6 @@ const StyledLogin = styled.div`
   justify-content: left;
 `;
 
-const StyledForm = styled.form``;
-
 const StyledLabel = styled.label`
   display: block;
   margin-top: 10px;
@@ -122,7 +120,7 @@ const Login = () => {
       <StyledLogin>
         <div>
           <h1>Login</h1>
-          <StyledForm>
+          <form>
             <div>
               <StyledLabel htlmfor="username">Username: </StyledLabel>
               <input
@@ -147,7 +145,7 @@ const Login = () => {
               </StyledButton>
               {message.show ? <p>{message.message}</p> : ""}
             </StyledButtonDiv>
-          </StyledForm>
+          </form>
         </div>
       </StyledLogin>
     </AuthenticationProvider>

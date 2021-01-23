@@ -14,6 +14,5 @@ npm run start
 ### TODO
 
 - Edit set, if needed
-- Styling
 - Tests
 - useReducer for providers?

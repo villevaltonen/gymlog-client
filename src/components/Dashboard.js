@@ -363,7 +363,7 @@ const Dashboard = () => {
                 <StyledTableHeader>Time</StyledTableHeader>
               </StyledTableRow>
             </StyledTableHead>
-            {renderSets(result.sets)}
+            <tbody>{renderSets(result.sets)}</tbody>
           </StyledTable>
           <StyledButton className="btn" onClick={getSets}>
             Show more...
