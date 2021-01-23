@@ -14,6 +14,8 @@ npm run start
 ### TODO
 
 - Edit set (not needed necessarily)
+  - Select a set from list and store id in a hook
+  - When a set is selected, convert add set button to edit set and use different API
 - Tests
 - Improve styling
 - useReducer for providers (?)
