@@ -15,4 +15,5 @@ npm run start
 
 - Edit set, if needed
 - Tests
+- Mobile styling
 - useReducer for providers?
