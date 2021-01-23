@@ -13,7 +13,7 @@ npm run start
 
 ### TODO
 
-- Edit set, if needed
+- Edit set (not needed necessarily)
 - Tests
-- Mobile styling
-- useReducer for providers?
+- Improve styling
+- useReducer for providers (?)
